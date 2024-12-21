@@ -53,11 +53,11 @@ def reconstruct_path(came_from, current):
 
 # MAP GENERATION --------------------------------------------------------------------------------------------------------------------------------------------
 # Step 1: Load the Image
-image = cv2.imread("warehousePics/maze.jpg", cv2.IMREAD_GRAYSCALE)
+image = cv2.imread("warehousePics/mazeupd.jpg", cv2.IMREAD_GRAYSCALE)
 
 # Step 2: Preprocess the Image
 # Resize the image for grid resolution (e.g., 100x100 grid)
-image_resized = cv2.resize(image, (10000, 10000))
+image_resized = cv2.resize(image, (2000, 2000))
 
 # Threshold the image to identify free and occupied spaces
 _, binary_map = cv2.threshold(image_resized, 128, 255, cv2.THRESH_BINARY)
@@ -72,8 +72,8 @@ grid_map = np.where(binary_map == 255, 1, 0)  # 255 -> Free space (1), 0 -> Obst
 
 # CURRENT & GOAL COORDINATES --------------------------------------------------------------------------------------------------------------------------------------------
 # Define current and goal coordinates
-current_position = (30, 2)  # (row, column) format
-goal_position = (90, 90)     # (row, column) format
+current_position = (1979, 1553)  # (row, column) format
+goal_position = (1983, 1623)     # (row, column) format
 
 # Run the A* algorithm to find the shortest path
 path = a_star(grid_map, current_position, goal_position)
