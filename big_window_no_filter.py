@@ -58,6 +58,9 @@ def detect_boxes():
                         angle_rad = np.linalg.norm(relative_rvec)
                         angle_deg = np.degrees(angle_rad)
 
+                        # Round the angle to two decimal places explicitly
+                        angle_deg_rounded = round(angle_deg,2)
+
                         # Draw axes for visualization
                         cv2.drawFrameAxes(frame, camera_matrix, dist_coeffs, rvec[0], tvec[0], 0.1)
 
@@ -75,13 +78,13 @@ def detect_boxes():
                                     (int(corner[0][0][0]), int(corner[0][0][1]) + 80),
                                     cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
 
-                        cv2.putText(frame, f"Angle: {angle_deg:.2f}°",
+                        cv2.putText(frame, f"Angle: {angle_deg:.2f} deg",
                                     (int(corner[0][0][0]), int(corner[0][0][1]) + 100),
                                     cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2)
 
                         # Print relative position and angular deviation in the console
                         print(f"Marker ID: {ids[i][0]} | Relative Position - X: {x:.2f}, Y: {y:.2f}, Z: {z:.2f}")
-                        print(f"Angular Deviation: {angle_deg:.2f}°")
+                        print(f"Angular Deviation: {angle_deg_rounded:.2f} deg")
                     else:
                         # Display message to calibrate
                         cv2.putText(frame, "Press 'c' to set initial position",

@@ -52,13 +52,13 @@ def detect_boxes(image_path):
                 cv2.putText(image, f"Z: {z:.2f} m",
                             (int(corner[0][0][0]), int(corner[0][0][1]) + 80),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
-                cv2.putText(image, f"Angle: {angle_deg:.2f}°",
+                cv2.putText(image, f"Angle: {angle_deg:.2f} deg",
                             (int(corner[0][0][0]), int(corner[0][0][1]) + 100),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2)
 
                 # Print position and angular deviation in the console
                 print(f"Marker ID: {ids[i][0]} | Position - X: {x:.2f}, Y: {y:.2f}, Z: {z:.2f}")
-                print(f"Angular Deviation: {angle_deg:.2f}°")
+                print(f"Angular Deviation: {angle_deg:.2f} deg")
     else:
         print("No markers detected in the image.")
 

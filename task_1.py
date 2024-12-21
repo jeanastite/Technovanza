@@ -86,13 +86,13 @@ def detect_boxes():
                         cv2.putText(frame, f"Pitch: {pitch_deg:.2f}°",
                                     (int(corner[0][0][0]), int(corner[0][0][1]) + 120),
                                     cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-                        cv2.putText(frame, f"Yaw: {yaw_deg:.2f}°",
+                        cv2.putText(frame, f"Yaw: {yaw_deg:.2f} deg",
                                     (int(corner[0][0][0]), int(corner[0][0][1]) + 140),
                                     cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
 
                         # Print relative position and orientation in the console
                         print(f"Marker ID: {ids[i][0]} | Relative Position - X: {x:.2f}, Y: {y:.2f}, Z: {z:.2f}")
-                        print(f"Relative Orientation - Roll: {roll_deg:.2f}°, Pitch: {pitch_deg:.2f}°, Yaw: {yaw_deg:.2f}°")
+                        print(f"Relative Orientation - Roll: {roll_deg:.2f} deg, Pitch: {pitch_deg:.2f}°, Yaw: {yaw_deg:.2f}°")
                     else:
                         # Display message to calibrate
                         cv2.putText(frame, "Press 'c' to set initial position",
