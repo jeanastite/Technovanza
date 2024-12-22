@@ -53,6 +53,6 @@ def detect_boxes(image_path):
     return num_boxes
 
 if __name__ == "__main__":
-    image_path = r"C:\Users\shard\Music\TechNoVanza\Technovanza\Box_detection\Images\box3.jpeg"  # Replace with the actual image path
+    image_path = r"Technovanza\Box_detection\Images\box3.jpeg"  # Replace with the actual image path
     num_boxes = detect_boxes(image_path)
     print("Number of boxes detected:", num_boxes)
