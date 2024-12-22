@@ -34,7 +34,7 @@ Technovanza/
 #### Scripts:
 
 - **`finding_position_orientation.py`**: Implements the core logic for detecting objects in images and estimating their 3D position and orientation. Likely uses computer vision techniques such as:
-  - Object Detection (e.g., using YOLO, SSD, or other detectors).
+  - Object Detection 
   - Pose Estimation (e.g., using Perspective-n-Point (PnP) algorithms).
 
 - **`calibrated_position_determination.py`**: Handles camera calibration and precise object position determination in a warehouse setting.
