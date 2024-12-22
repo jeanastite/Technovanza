@@ -30,7 +30,7 @@ box_count = 0
 
 for contour in contours:
     
-    if cv2.contourArea(contour) > 290:   
+    if cv2.contourArea(contour) > 22:   
          
         rect = cv2.minAreaRect(contour)
         box_count += 1
