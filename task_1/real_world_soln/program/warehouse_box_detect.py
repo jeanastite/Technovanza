@@ -3,25 +3,6 @@ import numpy as np
 import cv2.aruco as aruco
 
 
-def resize_image_with_aspect_ratio(image, width, height):
-    # Get original dimensions
-    h, w = image.shape[:2]
-
-    # Compute the scaling factors for each dimension
-    scale_w = width / w
-    scale_h = height / h
-
-    # Use the smaller scaling factor to maintain aspect ratio
-    scale = min(scale_w, scale_h)
-
-    # Compute new dimensions
-    new_width = int(w * scale)
-    new_height = int(h * scale)
-
-    # Resize the image
-    return cv2.resize(image, (new_width, new_height), interpolation=cv2.INTER_AREA)
-
-
 def detect_boxes(image_path):
     # Load the image
     image = cv2.imread(image_path)
@@ -63,22 +44,25 @@ def detect_boxes(image_path):
                 # Draw axes for visualization
                 cv2.drawFrameAxes(image, camera_matrix, dist_coeffs, rvec[0], tvec[0], 0.1)
 
+                # Calculate dynamic text positions
+                text_x = int(corner[0][0][0]) + 10  # Add margin to x-coordinate
+                text_y = int(corner[0][0][1]) - 50  # Ensure enough space above marker
+                max_y = image.shape[0] - 10        # Avoid going beyond image height
+
+                # Adjust text position to stay within the image
+                text_y = max(20, min(text_y, max_y))
+
                 # Display position and angular deviation
                 cv2.putText(image, f"ID: {ids[i][0]}",
-                            (int(corner[0][0][0]), int(corner[0][0][1]) - 10),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+                            (text_x, text_y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
                 cv2.putText(image, f"X: {x:.2f} m",
-                            (int(corner[0][0][0]), int(corner[0][0][1]) + 40),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
+                            (text_x, text_y + 20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
                 cv2.putText(image, f"Y: {y:.2f} m",
-                            (int(corner[0][0][0]), int(corner[0][0][1]) + 60),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+                            (text_x, text_y + 40), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
                 cv2.putText(image, f"Z: {z:.2f} m",
-                            (int(corner[0][0][0]), int(corner[0][0][1]) + 80),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
+                            (text_x, text_y + 60), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
                 cv2.putText(image, f"Angle: {angle_deg:.2f} deg",
-                            (int(corner[0][0][0]), int(corner[0][0][1]) + 100),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2)
+                            (text_x, text_y + 80), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2)
 
                 # Print position and angular deviation in the console
                 print(f"Marker ID: {ids[i][0]} | Position - X: {x:.2f}, Y: {y:.2f}, Z: {z:.2f}")
@@ -86,13 +70,10 @@ def detect_boxes(image_path):
     else:
         print("No markers detected in the image.")
 
-    # Resize image for display
-    resized_image = resize_image_with_aspect_ratio(image, 1000, 1000)
-
-    # Display the resized image
+    # Display the image with aspect ratio maintained
     window_name = "Image Detection"
-    cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
-    cv2.imshow(window_name, resized_image)
+    cv2.namedWindow(window_name, cv2.WINDOW_KEEPRATIO)
+    cv2.imshow(window_name, image)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
@@ -104,5 +85,5 @@ camera_matrix = np.array([[800.0, 0.0, 320.0],
 dist_coeffs = np.zeros((5, 1), dtype=np.float32)
 
 if __name__ == "__main__":
-    image_path = r"C:\Users\shard\Music\TechNoVanza\Technovanza\Aruco_id_detection\Test_Images\3.png"  # Replace with the path to your image
+    image_path = r"Technovanza\task_1\real_world_soln\images\top_view_warehouse.png"  # Replace with the path to your image
     detect_boxes(image_path)

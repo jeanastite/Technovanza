@@ -89,6 +89,10 @@ def detect_boxes(image_path):
     # Resize image for display
     resized_image = resize_image_with_aspect_ratio(image, 1000, 1000)
 
+    # Add the number of markers to the top-left corner
+    cv2.putText(resized_image, f"Boxes Detected: {marker_count}",
+                (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
+
     # Display the resized image
     window_name = "Image Detection"
     cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
@@ -104,5 +108,5 @@ camera_matrix = np.array([[800.0, 0.0, 320.0],
 dist_coeffs = np.zeros((5, 1), dtype=np.float32)
 
 if __name__ == "__main__":
-    image_path = r"C:\Users\shard\Music\TechNoVanza\Technovanza\Aruco_id_detection\Test_Images\3.png"  # Replace with the path to your image
+    image_path = r"Technovanza\task_1\give_task_soln\images\3.png"  # Replace with the path to your image
     detect_boxes(image_path)
