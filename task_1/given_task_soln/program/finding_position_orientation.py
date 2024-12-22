@@ -108,5 +108,5 @@ camera_matrix = np.array([[800.0, 0.0, 320.0],
 dist_coeffs = np.zeros((5, 1), dtype=np.float32)
 
 if __name__ == "__main__":
-    image_path = r"Technovanza\task_1\give_task_soln\images\3.png"  # Replace with the path to your image
+    image_path = r"Technovanza\task_1\given_task_soln\images\3.png"  # Replace with the path to your image
     detect_boxes(image_path)
