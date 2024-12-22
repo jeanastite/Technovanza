@@ -2,6 +2,26 @@ import cv2
 import numpy as np
 import cv2.aruco as aruco
 
+
+def resize_image_with_aspect_ratio(image, width, height):
+    # Get original dimensions
+    h, w = image.shape[:2]
+
+    # Compute the scaling factors for each dimension
+    scale_w = width / w
+    scale_h = height / h
+
+    # Use the smaller scaling factor to maintain aspect ratio
+    scale = min(scale_w, scale_h)
+
+    # Compute new dimensions
+    new_width = int(w * scale)
+    new_height = int(h * scale)
+
+    # Resize the image
+    return cv2.resize(image, (new_width, new_height), interpolation=cv2.INTER_AREA)
+
+
 def detect_boxes(image_path):
     # Load the image
     image = cv2.imread(image_path)
@@ -27,7 +47,7 @@ def detect_boxes(image_path):
         for i, corner in enumerate(corners):
             # Pose estimation for each detected marker
             rvec, tvec, _ = aruco.estimatePoseSingleMarkers(corner, 0.05, camera_matrix, dist_coeffs)
-            
+
             if rvec is not None and tvec is not None:
                 # Extract position
                 x, y, z = tvec[0][0]
@@ -62,18 +82,23 @@ def detect_boxes(image_path):
     else:
         print("No markers detected in the image.")
 
-    # Display the resulting image
-    cv2.imshow("Image Detection", image)
+    # Resize image for display
+    resized_image = resize_image_with_aspect_ratio(image, 1000, 1000)
+
+    # Display the resized image
+    window_name = "Image Detection"
+    cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
+    cv2.imshow(window_name, resized_image)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
 
 # Camera calibration parameters (example values)
-camera_matrix = np.array([[800.0, 0.0, 320.0], 
-                          [0.0, 800.0, 240.0], 
+camera_matrix = np.array([[800.0, 0.0, 320.0],
+                          [0.0, 800.0, 240.0],
                           [0.0, 0.0, 1.0]], dtype=np.float32)
 dist_coeffs = np.zeros((5, 1), dtype=np.float32)
 
 if __name__ == "__main__":
-    image_path = r"C:\Users\shard\Music\TechNoVanza\Technovanza\Test_Images\alignmentcheck.png"  # Replace with the path to your image
+    image_path = r"C:\Users\shard\Music\TechNoVanza\Technovanza\Aruco_id_detection\Test_Images\2.png"  # Replace with the path to your image
     detect_boxes(image_path)
