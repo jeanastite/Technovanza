@@ -41,6 +41,10 @@ def detect_boxes(image_path):
     corners, ids, _ = detector.detectMarkers(gray)
 
     if ids is not None:
+        # Count the number of markers detected
+        marker_count = len(ids)
+        print(f"Number of markers detected: {marker_count}")
+
         # Draw detected markers
         aruco.drawDetectedMarkers(image, corners, ids)
 
@@ -100,5 +104,5 @@ camera_matrix = np.array([[800.0, 0.0, 320.0],
 dist_coeffs = np.zeros((5, 1), dtype=np.float32)
 
 if __name__ == "__main__":
-    image_path = r"C:\Users\shard\Music\TechNoVanza\Technovanza\Aruco_id_detection\Test_Images\2.png"  # Replace with the path to your image
+    image_path = r"C:\Users\shard\Music\TechNoVanza\Technovanza\Aruco_id_detection\Test_Images\4.png"  # Replace with the path to your image
     detect_boxes(image_path)
