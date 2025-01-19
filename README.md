@@ -1,4 +1,4 @@
-# Technovanza
+# Locus 
 
 ## Warehouse Management and Object Tracking Project
 
